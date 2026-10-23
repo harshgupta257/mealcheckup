@@ -321,6 +321,55 @@ function renderHistory() {
   $('#streak').textContent = streak;
 }
 
+// ---------- themes ----------
+const THEMES = [
+  { id: 'classic', name: 'Classic', emoji: '🍏', bg: '#f2f2f7', accent: '#34c759' },
+  { id: 'strawberry', name: 'Strawberry Milk', emoji: '🍓', bg: '#fff0f4', accent: '#ff5c8a' },
+  { id: 'matcha', name: 'Matcha Latte', emoji: '🍵', bg: '#f0f4e6', accent: '#7cb342' },
+  { id: 'blueberry', name: 'Blueberry Cloud', emoji: '🫐', bg: '#eef0ff', accent: '#6c7cff' },
+  { id: 'peach', name: 'Peach Sorbet', emoji: '🍑', bg: '#fff3ea', accent: '#ff9466' },
+  { id: 'lavender', name: 'Lavender Dream', emoji: '🦄', bg: '#f6f0ff', accent: '#a77bff' },
+  { id: 'bunny', name: 'Midnight Bunny', emoji: '🐰', bg: '#17142b', accent: '#ff9ecb' },
+];
+
+function applySkin(id) {
+  const theme = THEMES.find((t) => t.id === id) || THEMES[0];
+  if (theme.id === 'classic') delete document.documentElement.dataset.skin;
+  else document.documentElement.dataset.skin = theme.id;
+  // Status bar colour: Classic follows light/dark, cute themes use their own background
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m) => {
+    if (!m.dataset.original) m.dataset.original = m.content;
+    m.content = theme.id === 'classic' ? m.dataset.original : theme.bg;
+  });
+  store.set('skin', theme.id);
+  return theme;
+}
+
+function renderSkins() {
+  const current = store.get('skin', 'classic');
+  $('#skin-list').innerHTML = THEMES.map((t) => `
+    <button class="skin" role="radio" data-skin="${t.id}" aria-checked="${t.id === current}">
+      <span class="swatch" style="--sw-bg:${t.bg};--sw-accent:${t.accent}">${t.emoji}</span>
+      <span class="skin-name">${t.name}</span>
+    </button>`).join('');
+}
+
+$('#skin-list').addEventListener('click', (e) => {
+  const btn = e.target.closest('.skin');
+  if (!btn) return;
+  const theme = applySkin(btn.dataset.skin);
+  renderSkins();
+  toast(`${theme.emoji} ${theme.name}`);
+});
+
+function renderWatermark() {
+  const el = $('#watermark');
+  // Enough copies to cover the rotated area at this screen size
+  const count = Math.ceil(((innerWidth * 2) / 190) * ((innerHeight * 2) / 52));
+  if (el.childElementCount === count) return;
+  el.innerHTML = '<span>harshu...mendhak</span>'.repeat(count);
+}
+
 // ---------- tabs ----------
 function showView(name) {
   document.querySelectorAll('.view').forEach((v) => v.classList.toggle('active', v.id === 'view-' + name));
@@ -345,6 +394,10 @@ if (params.get('eaten')) {
 }
 
 pruneOld();
+applySkin(store.get('skin', 'classic'));
+renderSkins();
+renderWatermark();
+addEventListener('resize', renderWatermark);
 renderSchedule();
 renderToday();
 renderHistory();

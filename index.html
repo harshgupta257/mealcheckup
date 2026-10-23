@@ -14,7 +14,17 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Apply the saved theme before first paint so there is no flash
+    try {
+      var skin = JSON.parse(localStorage.getItem('meals:skin'));
+      if (skin && skin !== 'classic') document.documentElement.dataset.skin = skin;
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <main>
@@ -56,6 +66,9 @@
 
       <h2 class="section-title">Meal Times</h2>
       <ul class="card list" id="schedule-list"></ul>
+
+      <h2 class="section-title">Theme</h2>
+      <div class="card skins" id="skin-list" role="radiogroup" aria-label="Theme"></div>
 
       <h2 class="section-title">Reminders</h2>
       <ul class="card list">
@@ -102,6 +115,8 @@
       <ul class="card list" id="history-list"></ul>
     </section>
   </main>
+
+  <div class="watermark" aria-hidden="true"><div class="watermark-inner" id="watermark"></div></div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
