@@ -1,15 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#5ee07a"/>
-      <stop offset="1" stop-color="#28b84c"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe066"/>
+      <stop offset="1" stop-color="#ffc21a"/>
+    </linearGradient>
+    <linearGradient id="heart" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff5a6e"/>
+      <stop offset="1" stop-color="#e8293f"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" fill="url(#g)"/>
-  <circle cx="256" cy="256" r="138" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="34"/>
-  <path d="M256 118a138 138 0 1 1-130 92" fill="none" stroke="#fff" stroke-width="34" stroke-linecap="round"/>
-  <g fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M222 196v52a20 20 0 0 0 20 20v62M242 196v52M262 196v52a20 20 0 0 1-20 20"/>
-    <path d="M296 330V196c22 10 30 40 30 70h-30"/>
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <!-- "H": fork is the left stroke, knife the right, joined by a bar -->
+  <g fill="none" stroke="#6b3e1f" stroke-linecap="round" stroke-linejoin="round">
+    <!-- fork -->
+    <path stroke-width="20" d="M146 122v74M176 122v74M206 122v74M146 196c0 26 12 40 30 40s30-14 30-40"/>
+    <path stroke-width="30" d="M176 236v158"/>
+    <!-- knife handle -->
+    <path stroke-width="30" d="M336 262v132"/>
+    <!-- crossbar -->
+    <path stroke-width="30" d="M176 288h160"/>
+  </g>
+  <!-- knife blade -->
+  <path fill="#6b3e1f" d="M321 268V136c0-12 10-18 19-12 26 18 34 70 31 144z"/>
+
+  <!-- little heart on the crossbar -->
+  <g transform="translate(256 290) scale(.68) translate(-256 -290)">
+  <path fill="url(#heart)" stroke="#fff" stroke-width="10" stroke-linejoin="round"
+        d="M256 330c-30-20-48-38-48-58 0-15 11-26 25-26 10 0 18 5 23 13 5-8 13-13 23-13 14 0 25 11 25 26 0 20-18 38-48 58z"/>
+  <ellipse cx="236" cy="266" rx="7" ry="5" fill="#fff" opacity=".7" transform="rotate(-30 236 266)"/>
   </g>
 </svg>
