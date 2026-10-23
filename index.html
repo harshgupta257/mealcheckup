@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Meals">
+  <meta name="description" content="Daily meal reminders and checklist">
+  <title>Meals</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <!-- TODAY -->
+    <section id="view-today" class="view">
+      <header class="large-title">
+        <p class="eyebrow" id="today-date"></p>
+        <h1>Today</h1>
+      </header>
+
+      <div class="card summary">
+        <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="ring-track" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="50"/>
+        </svg>
+        <div class="summary-text">
+          <span class="metric-label">Meals</span>
+          <span class="metric"><b id="eaten-count">0</b><span id="total-count">/0</span></span>
+          <p class="next" id="next-meal"></p>
+        </div>
+      </div>
+
+      <div class="card banner hidden" id="notif-banner">
+        <div class="banner-icon">🔔</div>
+        <div class="row-main">
+          <span class="row-title" id="banner-title">Turn on reminders</span>
+          <span class="row-sub" id="banner-sub">Get a notification at each meal time.</span>
+        </div>
+        <button class="pill" id="banner-btn">Allow</button>
+      </div>
+
+      <h2 class="section-title">Checklist</h2>
+      <ul class="card list" id="checklist"></ul>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="view-schedule" class="view">
+      <header class="large-title"><h1>Schedule</h1></header>
+
+      <h2 class="section-title">Meal Times</h2>
+      <ul class="card list" id="schedule-list"></ul>
+
+      <h2 class="section-title">Reminders</h2>
+      <ul class="card list">
+        <li class="row">
+          <div class="row-main">
+            <span class="row-title">Notifications</span>
+            <span class="row-sub" id="notif-status"></span>
+          </div>
+          <button class="pill" id="notif-btn">Enable</button>
+        </li>
+        <li class="row"><button class="link" id="test-btn">Send Test Notification</button></li>
+      </ul>
+      <p class="footnote">
+        Notifications fire while the app is open or running in the background.
+        On iPhone, first tap <b>Share → Add to Home Screen</b>, then open it from your home screen and enable notifications.
+      </p>
+
+      <h2 class="section-title">Phone Calendar</h2>
+      <ul class="card list">
+        <li class="row"><button class="link" id="ics-btn">Add Reminders to Calendar</button></li>
+      </ul>
+      <p class="footnote">
+        The most reliable option. This downloads a calendar file with a daily alert for each meal, so your phone
+        reminds you even when this app is closed. Download it again after you change the times.
+      </p>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="view-history" class="view">
+      <header class="large-title"><h1>History</h1></header>
+
+      <div class="stats">
+        <div class="card stat">
+          <span class="metric-label">Streak</span>
+          <span class="metric"><b id="streak">0</b><span> days</span></span>
+        </div>
+        <div class="card stat">
+          <span class="metric-label">This Week</span>
+          <span class="metric"><b id="week-pct">0</b><span>%</span></span>
+        </div>
+      </div>
+
+      <h2 class="section-title">Last 7 Days</h2>
+      <ul class="card list" id="history-list"></ul>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <nav class="tabbar">
+    <button data-view="today" aria-label="Today">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg>
+      <span>Today</span>
+    </button>
+    <button data-view="schedule" aria-label="Schedule">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+      <span>Schedule</span>
+    </button>
+    <button data-view="history" aria-label="History">
+      <svg viewBox="0 0 24 24"><path d="M5 19V13M10 19V8M15 19v-8M20 19V5"/></svg>
+      <span>History</span>
+    </button>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>

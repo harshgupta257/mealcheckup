@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: mealcheckup
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
+    headers:
+      - path: /sw.js
+        name: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - path: /manifest.webmanifest
+        name: Content-Type
+        value: application/manifest+json
